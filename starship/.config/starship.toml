@@ -1,0 +1,318 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Sets user-defined palette
+# Palettes must be defined _after_ this line
+palette = "blues"
+
+format = """
+[](fg:b1 bg:base)\
+[$os](fg:white bg:b1)\
+[$username](fg:white bg:b1)[@ ](fg:white bg:b1)[$shell](fg:white bg:b1)\
+[](fg:b1 bg:b2)\
+[$directory](fg:white bg:b2)\
+[](fg:b2 bg:b3)\
+[$git_branch](fg:white bg:b3)\
+[$git_status](fg:white bg:b3)\
+[](fg:b3 bg:b4)\
+[$c](fg:white bg:b4)\
+[$elixir](fg:white bg:b4)\
+[$elm](fg:white bg:b4)\
+[$golang](fg:white bg:b4)\
+[$gradle](fg:white bg:b4)\
+[$haskell](fg:white bg:b4)\
+[$java](fg:white bg:b4)\
+[$julia](fg:white bg:b4)\
+[$nodejs](fg:white bg:b4)\
+[$nim](fg:white bg:b4)\
+[$rust](fg:white bg:b4)\
+[$scala](fg:white bg:b4)\
+[](fg:b4 bg:b5)\
+[$docker_context](fg:white bg:b5)\
+[](fg:b5 bg:b6)\
+[$time](fg:white bg:b6)\
+[](fg:b6 bg:base)\n$character
+"""
+
+right_format = "$custom"
+
+command_timeout = 300
+
+# Disable the blank line at the start of the prompt
+# add_newline = false
+
+# Writing a custom module for mommy O_o
+[custom.mommy]
+command = "mommy -1 -s $status"
+when = "true"
+
+# You can also replace your username with a neat symbol like   or disable this
+# and use the os module below
+[username]
+show_always = true
+aliases = {"root" = "", "tori" = "", "chroot" = "󰽰"}
+
+format = '$user '
+disabled = false
+
+# An alternative to the username module which displays a symbol that
+# represents the current operating system
+[os]
+disabled = false # Disabled by default
+style = "$os "
+
+[shell]
+format = '$indicator'
+bash_indicator = " "
+fish_indicator = " "
+zsh_indicator = " "
+powershell_indicator = " "
+ion_indicator = " "
+elvish_indicator = "󰘧 "
+tcsh_indicator = "  "
+xonsh_indicator = "󱙷 "
+cmd_indicator = " "
+nu_indicator = " "
+unknown_indicator = " "
+disabled = false
+
+[directory]
+read_only = " 󰌾"
+format = " $path "
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Here is how you can shorten some long paths by text replacement
+# similar to mapped_locations in Oh My Posh:
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = " 󰈙 "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important 󰈙 " = " 󰈙 "
+
+[aws]
+symbol = " "
+
+[buf]
+symbol = " "
+
+[c]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[cmake]
+symbol = " "
+
+[conda]
+symbol = " "
+
+[crystal]
+symbol = " "
+
+[dart]
+symbol = " "
+
+[docker_context]
+symbol = " "
+format = ' $symbol $context '
+
+[elixir]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[elm]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[fennel]
+symbol = " "
+
+[fossil_branch]
+symbol = " "
+
+[git_branch]
+symbol = " "
+format = ' $symbol $branch '
+
+[git_commit]
+tag_symbol = '  '
+
+[git_status]
+format = '$all_status$ahead_behind '
+
+[golang]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[gradle]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[guix_shell]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[haxe]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[hostname]
+ssh_symbol = " "
+
+[java]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[julia]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[kotlin]
+symbol = " "
+
+[lua]
+symbol = " "
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+
+[nodejs]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[nim]
+symbol = "󰆥 "
+
+format = ' $symbol ($version) '
+
+[nix_shell]
+symbol = " "
+
+[ocaml]
+symbol = " "
+
+[package]
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+
+[php]
+symbol = " "
+
+[pijul_channel]
+symbol = " "
+
+[python]
+symbol = " "
+
+[rlang]
+symbol = "󰟔 "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[scala]
+symbol = " "
+
+format = ' $symbol ($version) '
+
+[swift]
+symbol = " "
+
+[zig]
+symbol = " "
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+format = ' ♥ $time '
+
+[character]
+success_symbol = "[>](bold fg:white) "
+error_symbol = "[>](bold fg:#ff6b6b) "
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+# Palette definitions
+[palettes.blues]
+b1 = "#081c33"
+b2 = "#0e355e"
+b3 = "#144d85"
+b4 = "#1a65ad"
+b5 = "#108e66"
+b6 = "#1a5a96"
+white = "#ffffff"
+base = "#0a0f1a"

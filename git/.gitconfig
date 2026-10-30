@@ -1,0 +1,19 @@
+[user]
+	name = Adrian Eduardo Urtiz Parra
+	email = adrian.urtizp@sfa.michoacan.gob.mx
+[includeIf "gitdir:~/dev/freelance/"]
+	path = ~/.gitconfig-freelance
+[credential]
+	helper = libsecret
+[alias]
+	st = status
+	co = checkout
+	cob = checkout -b
+	br = branch
+	ci = commit
+	cm = commit -m
+	df = diff
+	lg = log --oneline --graph --decorate
+	pl = pull
+	ps = push
+	f = fetch
