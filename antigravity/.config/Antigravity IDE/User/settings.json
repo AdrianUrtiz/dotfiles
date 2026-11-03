@@ -2,7 +2,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "workbench.activityBar.location": "bottom",
-  "workbench.productIconTheme": "fluent-icons",
+  "workbench.productIconTheme": "viraOutline",
   "editor.fontFamily": "'Cascadia Code PL', 'JetBrainsMono Nerd Font Mono', monospace",
   "editor.fontLigatures": true,
   "workbench.startupEditor": "none",
@@ -139,7 +139,6 @@
   "editor.unicodeHighlight.invisibleCharacters": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "window.customTitleBarVisibility": "auto",
-  "terminal.integrated.defaultProfile.linux": "fish",
   "terminal.integrated.fontLigatures.enabled": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {

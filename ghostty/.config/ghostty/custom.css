@@ -1,0 +1,36 @@
+/* Reducimos la altura general de la barra de pestañas */
+tabbar tabbox {
+    padding: 0px;
+    margin: 0px;
+    min-height: 24px; 
+}
+
+/* PESTAÑAS INACTIVAS: Se ven ligeramente apagadas para no distraer */
+tabbar tabbox tab {
+    background: transparent;
+    border: none;
+    border-radius: 0px; 
+    padding: 2px 8px; 
+    margin: 0px;
+    color: rgba(255, 255, 255, 0.4); /* Texto opaco/atenuado para las inactivas */
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* EFECTO HOVER: Reacciona suavemente al pasar el cursor */
+tabbar tabbox tab:hover {
+    background-color: rgba(255, 255, 255, 0.03); /* Un destello casi imperceptible */
+    color: rgba(255, 255, 255, 0.7); /* El texto se aclara un poco */
+}
+
+/* PESTAÑA ACTIVA: Distinción muy ligera y elegante */
+tabbar tabbox tab:checked {
+    background-color: rgba(255, 255, 255, 0.05); /* Fondo apenas un toque más claro */
+    color: rgba(255, 255, 255, 0.9); /* Texto casi blanco, totalmente legible */
+    border: none; /* Sin líneas que rompan el minimalismo */
+}
+
+/* Evitamos cambios bruscos si pasas el mouse sobre la pestaña ya activa */
+tabbar tabbox tab:checked:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+}

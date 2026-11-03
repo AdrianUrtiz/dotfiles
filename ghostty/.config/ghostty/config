@@ -1,9 +1,72 @@
-# Starter para Fedora/GNOME (en CachyOS se usa kitty).
-# Sintaxis: clave = valor
-font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 13
-background-opacity = 0.8
-window-padding-x = 12
-window-padding-y = 12
-cursor-style = block
-shell-integration-features = no-cursor
+# Ghostty — config clean (Fedora)
+# Archivo: ~/.config/ghostty/config
+# Recargar: ctrl+shift+,  (o ghostty +reload-config)
+
+# --- Apariencia limpia ---
+# Tema Catppuccin Mocha (archivo en ~/.config/ghostty/themes/catppuccin-mocha)
+theme = catppuccin-mocha
+selection-background = #9c9fb6
+selection-foreground = #1e1e2e
+font-family = JetBrainsMono Nerd Font
+# Ligaduras de programación (=>, !=, ==, etc.)
+font-feature = +calt, +liga, +dlig
+# No romper ligaduras bajo el cursor (estilo editor como Warp/VSCode)
+font-shaping-break = no-cursor
+font-size = 11
+# --- Ventana limpia / grande ---
+# Sin barra de botones (headerbar) — solo tabs + terminal
+gtk-titlebar = false
+# Tabs minimalistas: compactas (no anchas) y barra plana sin sombras.
+# (window-show-tab-bar ya es auto: se oculta con una sola tab)
+gtk-wide-tabs = false
+gtk-toolbar-style = flat
+# Tamaño inicial grande (en celdas). 0 = auto.
+window-width = 120
+window-height = 30
+# En GNOME Wayland el compositor centra solo las ventanas nuevas
+# y ignora posiciones absolutas, por eso no fijamos window-position.
+window-padding-x = 8
+window-padding-y = 8
+window-padding-balance = true
+background-opacity = 1
+unfocused-split-opacity = 0.85
+cursor-style = bar
+cursor-style-blink = true
+shell-integration-features = cursor,sudo
+confirm-close-surface = false
+quit-after-last-window-closed = true
+copy-on-select = true
+mouse-hide-while-typing = true
+window-theme = ghostty
+
+# --- Atajos personalizados ---
+# Split de pantalla (lado, inteligente según tamaño)
+keybind = ctrl+shift+d=new_split:auto
+
+# Nueva tab
+keybind = ctrl+shift+t=new_tab
+
+# Cerrar tab actual
+# OJO: esto roba ctrl+w al shell (borrar palabra). Es lo que pediste.
+keybind = ctrl+w=close_tab
+
+# Cerrar split actual (sobrescribe el default que cerraba la tab)
+keybind = ctrl+shift+w=close_surface
+
+# Limpiar prompt + scrollback
+keybind = ctrl+shift+k=clear_screen
+
+# --- Selección estilo Warp ---
+# Con selección activa (mouse): shift+flechas la extienden.
+# Sin selección: la tecla pasa al shell (performable) para seleccionar
+# el texto del comando en lugar de no hacer nada.
+keybind = performable:shift+arrow_left=adjust_selection:left
+keybind = performable:shift+arrow_right=adjust_selection:right
+keybind = performable:shift+arrow_up=adjust_selection:up
+keybind = performable:shift+arrow_down=adjust_selection:down
+keybind = performable:ctrl+shift+c=copy_to_clipboard
+keybind = performable:ctrl+shift+v=paste_from_clipboard
+# Ctrl+Enter: salto de línea en el shell (fullscreen se mueve a F11)
+keybind = shift+enter=unbind
+keybind = f11=toggle_fullscreen
+

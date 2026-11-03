@@ -1,0 +1,8 @@
+# Identidad personal (Fedora). Se activa con:
+#   ln -sf ~/.gitconfig-personal ~/.gitconfig.identity
+# o con ./install.sh (paquete git -> personal).
+[user]
+	name = AdrianUrtiz
+	email = 116136643+AdrianUrtiz@users.noreply.github.com
+[includeIf "gitdir:~/dev/employee/"]
+	path = ~/.gitconfig-work

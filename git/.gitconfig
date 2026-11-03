@@ -1,10 +1,10 @@
-[user]
-	name = Adrian Eduardo Urtiz Parra
-	email = adrian.urtizp@sfa.michoacan.gob.mx
-[includeIf "gitdir:~/dev/freelance/"]
-	path = ~/.gitconfig-freelance
 [credential]
 	helper = libsecret
+[core]
+	editor = code --wait
+	autocrlf = input
+[init]
+	defaultBranch = main
 [alias]
 	st = status
 	co = checkout
@@ -17,3 +17,10 @@
 	pl = pull
 	ps = push
 	f = fetch
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[include]
+	path = ~/.gitconfig.identity

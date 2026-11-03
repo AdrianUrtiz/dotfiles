@@ -1,0 +1,8 @@
+# Identidad trabajo (CachyOS). Se activa con:
+#   ln -sf ~/.gitconfig-work ~/.gitconfig.identity
+# o con ./install.sh (paquete git -> work).
+[user]
+	name = Adrian Eduardo Urtiz Parra
+	email = adrian.urtizp@sfa.michoacan.gob.mx
+[includeIf "gitdir:~/dev/freelance/"]
+	path = ~/.gitconfig-freelance

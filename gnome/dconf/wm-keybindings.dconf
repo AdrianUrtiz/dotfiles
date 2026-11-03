@@ -1,0 +1,4 @@
+[/]
+maximize=@as []
+show-desktop=['<Super>d']
+unmaximize=@as []

@@ -1,0 +1,9 @@
+[/]
+favorite-apps=['antigravity.desktop', 'com.microsoft.VSCode.desktop', 'brave-browser.desktop', 'com.mitchellh.ghostty.desktop', 'datagrip_datagrip.desktop', 'spotify_spotify.desktop', 'com.github.IsmaelMartinez.teams_for_linux.desktop']
+
+[app-switcher]
+current-workspace-only=true
+
+[keybindings]
+show-screenshot-ui=['<Shift><Super>s']
+toggle-message-tray=['<Shift><Super>v']
