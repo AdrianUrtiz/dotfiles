@@ -140,10 +140,6 @@ eval "$(starship init zsh)"
 
 PATH=~/.console-ninja/.bin:$PATH
 
-unalias ant 2>/dev/null
-ant() {
-  nohup antigravity-ide "$@" > /dev/null 2>&1 &|
-}
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 

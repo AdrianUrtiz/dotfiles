@@ -314,8 +314,8 @@ done
 if [[ " ${selected[*]} " == *" antigravity "* ]]; then
     echo
     echo "Nota Antigravity: el repo solo guarda settings.json."
-    echo "  CachyOS: la app ya está (snap/antigravity-ide-snap.antigravity-ide)."
-    echo "  Fedora:  instala el .rpm de la web de Google Antigravity."
+    echo "  App por snap en ambas máquinas (snap run antigravity-ide-snap.antigravity-ide)."
+    echo "  Comando 'ant' lo provee el paquete bin (bin/.local/bin/ant)."
 fi
 if [[ " ${selected[*]} " == *" git "* ]] && ! command -v git-credential-libsecret >/dev/null 2>&1; then
     echo "Nota git: el helper 'libsecret' se instaló con git; si 'git push' pide usuario siempre, avísame."
