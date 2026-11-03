@@ -11,7 +11,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome)
+PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome bin)
 
 desc() {
     case "$1" in
@@ -24,6 +24,7 @@ desc() {
         antigravity) echo "Antigravity settings.json (solo ajustes, sin cachés)" ;;
         zsh)         echo "Zsh + oh-my-zsh (~/.zshrc)" ;;
         gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf load)" ;;
+        bin)         echo "Comando ant -> Antigravity (wrapper snap, ~/.local/bin/)" ;;
     esac
 }
 
@@ -64,7 +65,7 @@ pkg_extra_bins() {
     esac
 }
 
-PRESET_CACHY=(fish starship git hypr kitty antigravity)
+PRESET_CACHY=(fish starship git hypr kitty antigravity bin)
 PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome)
 
 default_selection() {

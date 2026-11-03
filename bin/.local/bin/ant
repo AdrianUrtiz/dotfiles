@@ -1,0 +1,4 @@
+#!/bin/sh
+# Wrapper tipo `code` para Antigravity (snap).
+# Reenvía todos los argumentos: archivos, carpetas, flags (-n, -r, -g, -d, etc.)
+exec snap run antigravity-ide-snap.antigravity-ide "$@"
