@@ -197,4 +197,5 @@
     },
   },
   "editor.fontSize": 13,
+  "viraTheme.syncProductIcons": false,
 }

@@ -12,6 +12,6 @@ command='flatpak run io.missioncenter.MissionCenter\n'
 name='Mission Center'
 
 [custom-keybindings/custom2]
-binding='<Shift><Control>Return'
+binding='<Super>Return'
 command='/usr/bin/ghostty'
 name='Ghostty'

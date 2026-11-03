@@ -41,7 +41,7 @@ DE="${XDG_CURRENT_DESKTOP:-desconocido}"
 # Paquetes de la distro necesarios si falta el binario (vacío = nada)
 pkg_distro_pkgs() {
     case "$1:$FAMILY" in
-        fish:*)     echo "fish" ;;
+        fish:*)     echo "fish eza bat" ;;
         starship:*) echo "starship" ;;
         git:*)      echo "git libsecret" ;;
         kitty:*)    echo "kitty" ;;
@@ -56,9 +56,16 @@ pkg_bin() {
         *) echo "" ;;
     esac
 }
+# Binarios extra que el paquete necesita además del principal
+pkg_extra_bins() {
+    case "$1" in
+        fish) echo "eza bat" ;;
+        *) echo "" ;;
+    esac
+}
 
 PRESET_CACHY=(fish starship git hypr kitty antigravity)
-PRESET_FEDORA=(zsh starship git ghostty antigravity gnome)
+PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome)
 
 default_selection() {
     case "$DE" in
@@ -168,11 +175,16 @@ fi
 
 # --- Dependencias: solo instala lo que falte (binario ausente) ---
 install_missing_deps() {
-    local pkgs=("$@") p bin cmd pkgs_to_install=()
+    local pkgs=("$@") p bin b cmd pkgs_to_install=() missing
     for p in "${pkgs[@]}"; do
         bin="$(pkg_bin "$p")"
         [[ -z "$bin" ]] && continue
-        if command -v "$bin" >/dev/null 2>&1; then continue; fi
+        missing=0
+        command -v "$bin" >/dev/null 2>&1 || missing=1
+        for b in $(pkg_extra_bins "$p"); do
+            command -v "$b" >/dev/null 2>&1 || missing=1
+        done
+        (( missing )) || continue
         for cmd in $(pkg_distro_pkgs "$p"); do pkgs_to_install+=("$cmd"); done
     done
     if (( ${#pkgs_to_install[@]} == 0 )); then
@@ -242,6 +254,21 @@ setup_git_identity() {
     echo "  identidad: ~/.gitconfig.identity -> $target"
 }
 
+set_default_shell() {
+    local shell_bin
+    shell_bin="$(command -v fish)"
+    if [[ "$SHELL" == "$shell_bin" ]]; then
+        echo "  shell ya es fish: $SHELL"
+        return 0
+    fi
+    echo "  cambiando shell a fish (actual: $SHELL)..."
+    if chsh -s "$shell_bin"; then
+        echo "  shell por defecto: fish (aplica en el próximo login)"
+    else
+        echo "  AVISO: no se pudo cambiar. Hazlo a mano: chsh -s $shell_bin"
+    fi
+}
+
 restore_gnome() {
     local f key
     command -v dconf >/dev/null 2>&1 || { echo "  AVISO: 'dconf' no existe, omito restore."; return 0; }
@@ -276,6 +303,9 @@ for p in "${selected[@]}"; do
     if [[ "$p" == "gnome" ]]; then
         restore_gnome
     fi
+    if [[ "$p" == "fish" ]]; then
+        set_default_shell
+    fi
 done
 
 if [[ " ${selected[*]} " == *" antigravity "* ]]; then
@@ -302,4 +332,4 @@ if [[ " ${selected[*]} " == *" zsh "* ]] && [[ ! -d "$HOME/.oh-my-zsh" ]]; then
 fi
 
 echo
-echo "Hecho. Recarga con: exec zsh   (en CachyOS/Hyprland: exec fish; hyprctl reload)"
+echo "Hecho. Recarga con: exec fish   (zsh sigue disponible: exec zsh)"
