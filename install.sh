@@ -48,12 +48,14 @@ pkg_distro_pkgs() {
         kitty:*)    echo "kitty" ;;
         ghostty:*)  echo "ghostty" ;;
         zsh:*)      echo "zsh" ;;
+        bin:*)      echo "snapd" ;;
         *)          echo "" ;;
     esac
 }
 pkg_bin() {
     case "$1" in
         fish|starship|git|kitty|ghostty|zsh) echo "$1" ;;
+        bin) echo "snap" ;;
         *) echo "" ;;
     esac
 }
@@ -66,7 +68,7 @@ pkg_extra_bins() {
 }
 
 PRESET_CACHY=(fish starship git hypr kitty antigravity bin)
-PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome)
+PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome bin)
 
 default_selection() {
     case "$DE" in

@@ -16,7 +16,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `antigravity`| `~/.config/Antigravity IDE/User/settings.json` | Fuente de la verdad: el repo (se sobrescribe local)  |
 | `zsh`        | `~/.zshrc`                                     | Fedora: oh-my-zsh + starship + zoxide (ver nota)     |
 | `gnome`      | dconf + `~/.config/tiling-assistant/`          | Keybindings, dash, interface; `monitors.xml` y `mimeapps.list` NO se versionan |
-| `bin`        | `~/.local/bin/ant`                             | Wrapper `ant .` → Antigravity snap (CachyOS; en Fedora hay que adaptarlo al .rpm) |
+| `bin`        | `~/.local/bin/ant`                             | Wrapper `ant .` → Antigravity snap (snap en ambas distros; instala `snapd` si falta) |
 
 ## Uso
 
