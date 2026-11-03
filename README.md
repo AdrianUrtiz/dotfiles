@@ -1,7 +1,8 @@
 # dotfiles
 
-Configuraciones personales gestionadas con [GNU Stow](https://www.gnu.org/software/stow/).
-Cada carpeta es un paquete independiente que se enlaza a `$HOME`.
+Configuraciones personales. Cero dependencias: el instalador es bash puro
+(`mkdir` + `ln -s`, sin stow ni nada externo).
+Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 
 ## Paquetes
 
@@ -29,9 +30,9 @@ cd ~/dotfiles
 
 El instalador (bash puro, sin dependencias extra):
 1. Detecta distro (`pacman`/`dnf`) y escritorio para sugerir selección.
-2. Instala dependencias (`fish`, `starship`, `stow`, terminal...).
+2. Instala solo los programas que falten (si `fish`, `starship`... ya existen, no pide sudo).
 3. Guarda backup `.bak.<fecha>` de lo que pise (si es idéntico, lo reemplaza sin backup).
-4. Enlaza con `stow` (Antigravity con `ln -s` directo).
+4. Enlaza cada archivo del paquete a su ruta en `$HOME` con `ln -s`.
 
 ## Flujo diario
 

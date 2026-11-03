@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Instalador interactivo de dotfiles (sin dependencias extra, solo bash).
+# Instalador de dotfiles: bash puro, cero dependencias externas.
+# Cada paquete replica la ruta de $HOME y se enlaza archivo por archivo con ln -s.
 # Uso:
 #   ./install.sh                  -> menú interactivo (marcar/desmarcar con números)
 #   ./install.sh --all            -> instala todo
@@ -29,33 +30,26 @@ source /etc/os-release 2>/dev/null || true
 DISTRO="${ID:-desconocida}"
 FAMILY="otra"
 case "${ID_LIKE:-} ${ID:-}" in
-    *arch*)   FAMILY="arch" ;;
+    *arch*)        FAMILY="arch" ;;
     *fedora*|*rhel*) FAMILY="fedora" ;;
 esac
 DE="${XDG_CURRENT_DESKTOP:-desconocido}"
 
-if [[ "$FAMILY" == "arch" ]]; then
-    PM_INSTALL=(sudo pacman -S --needed --noconfirm)
-elif [[ "$FAMILY" == "fedora" ]]; then
-    PM_INSTALL=(sudo dnf install -y)
-else
-    echo "Distro no reconocida ($DISTRO): instalaré dependencias a mano si hace falta."
-    PM_INSTALL=(sudo)
-fi
-
-# Dependencias por paquete y familia (vacío = nada que instalar)
-pkg_deps() {
+# Paquetes de la distro necesarios si falta el binario (vacío = nada)
+pkg_distro_pkgs() {
     case "$1:$FAMILY" in
-        fish:*)        echo "fish" ;;
-        starship:*)    echo "starship" ;;
-        git:arch)      echo "git libsecret" ;;
-        git:fedora)    echo "git libsecret" ;;
-        git:*)         echo "git" ;;
-        kitty:*)       echo "kitty" ;;
-        ghostty:*)     echo "ghostty" ;;
-        hypr:arch)     echo "" ;;
-        hypr:*)        echo "__UNSUPPORTED__" ;;
-        antigravity:*) echo "" ;;
+        fish:*)     echo "fish" ;;
+        starship:*) echo "starship" ;;
+        git:*)      echo "git libsecret" ;;
+        kitty:*)    echo "kitty" ;;
+        ghostty:*)  echo "ghostty" ;;
+        *)          echo "" ;;
+    esac
+}
+pkg_bin() {
+    case "$1" in
+        fish|starship|git|kitty|ghostty) echo "$1" ;;
+        *) echo "" ;;
     esac
 }
 
@@ -142,109 +136,78 @@ if (( ${#selected[@]} == 0 )); then echo "Nada seleccionado."; exit 0; fi
 echo
 echo "Se instalará: ${selected[*]}"
 
-# --- Instalación ---
-install_deps() {
-    local pkgs=("$@") p deps d install_list=()
+# --- Dependencias: solo instala lo que falte (binario ausente) ---
+install_missing_deps() {
+    local pkgs=("$@") p bin cmd pkgs_to_install=()
     for p in "${pkgs[@]}"; do
-        deps="$(pkg_deps "$p")"
-        if [[ "$deps" == "__UNSUPPORTED__" ]]; then
-            echo "AVISO: '$p' es config de CachyOS/Hyprland, en $DISTRO/$DE se omite su instalación de dependencias."
-            continue
-        fi
-        for d in $deps; do install_list+=("$d"); done
+        bin="$(pkg_bin "$p")"
+        [[ -z "$bin" ]] && continue
+        if command -v "$bin" >/dev/null 2>&1; then continue; fi
+        for cmd in $(pkg_distro_pkgs "$p"); do pkgs_to_install+=("$cmd"); done
     done
-    # stow siempre hace falta
-    command -v stow >/dev/null || install_list+=("stow")
-    if (( ${#install_list[@]} > 0 )); then
-        # deduplicar
-        mapfile -t install_list < <(printf '%s\n' "${install_list[@]}" | sort -u)
-        echo "+ ${PM_INSTALL[*]} ${install_list[*]}"
-        "${PM_INSTALL[@]}" "${install_list[@]}" || {
-            echo "AVISO: falló algún paquete (${install_list[*]}). Sigo con los enlaces; instala a mano lo que falte."
-        }
-    fi
-}
-
-backup_target() {
-    # $1 = ruta destino en $HOME, $2 = ruta origen en el repo (para comparar)
-    local target="$1" src="$2" bak
-    if [[ -L "$target" && "$(readlink "$target")" == "$src" ]]; then
-        echo "  ya enlazado: $target"
+    if (( ${#pkgs_to_install[@]} == 0 )); then
+        echo "Dependencias: todo lo necesario ya está instalado."
         return 0
     fi
-    if [[ -e "$target" || -L "$target" ]]; then
-        if [[ -f "$target" && -f "$src" ]] && cmp -s "$target" "$src"; then
-            rm -f "$target"
-        else
-            bak="$target.bak.$(date +%Y%m%d%H%M%S)"
-            mv "$target" "$bak"
-            echo "  backup: $target -> $bak"
-        fi
+    mapfile -t pkgs_to_install < <(printf '%s\n' "${pkgs_to_install[@]}" | sort -u)
+    if [[ "$FAMILY" == "arch" ]]; then
+        echo "+ sudo pacman -S --needed ${pkgs_to_install[*]}"
+        sudo pacman -S --needed --noconfirm "${pkgs_to_install[@]}"
+    elif [[ "$FAMILY" == "fedora" ]]; then
+        echo "+ sudo dnf install -y ${pkgs_to_install[*]}"
+        sudo dnf install -y "${pkgs_to_install[@]}"
+    else
+        echo "AVISO: distro no reconocida ($DISTRO). Instala a mano: ${pkgs_to_install[*]}"
     fi
 }
 
-link_antigravity() {
-    # La ruta lleva espacio ("Antigravity IDE"): enlace manual, sin stow.
-    local dest="$HOME/.config/Antigravity IDE/User/settings.json"
-    local src="$DOTFILES_DIR/antigravity/settings.json"
-    mkdir -p "$(dirname "$dest")"
-    backup_target "$dest" "$src"
-    ln -sfn "$src" "$dest"
-    echo "  enlazado: $dest"
-}
-
-stow_file() {
-    # $1 = paquete, $2 = ruta relativa (p.ej. fish .config/fish/config.fish)
-    local pkg="$1" rel="$2"
-    local src="$DOTFILES_DIR/$pkg/$rel" dest="$HOME/$rel"
-    mkdir -p "$(dirname "$dest")"
-    backup_target "$dest" "$src"
-    ( cd "$DOTFILES_DIR" && stow -R -t "$HOME" "$pkg" )
-    echo "  stow: $pkg ($rel)"
-}
-
-stow_dir() {
-    # $1 = paquete, $2 = directorio relativo (p.ej. hypr .config/hypr)
-    local pkg="$1" rel="$2" bak
-    local src="$DOTFILES_DIR/$pkg/$rel" dest="$HOME/$rel"
-    if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
-        echo "  ya enlazado: $dest"
-    else
+# --- Enlazado nativo (equivale al "folding" de stow, sin stow) ---
+link_package() {
+    local pkg="$1" src dest rel bak
+    while IFS= read -r -d '' src; do
+        rel="${src#$DOTFILES_DIR/$pkg/}"
+        dest="$HOME/$rel"
+        if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
+            echo "  ya enlazado: $dest"
+            continue
+        fi
+        if [[ -d "$dest" && ! -L "$dest" ]]; then
+            echo "  AVISO: $dest es un directorio real, no puedo poner un archivo encima. Revísalo a mano."
+            continue
+        fi
         if [[ -e "$dest" || -L "$dest" ]]; then
-            bak="$dest.bak.$(date +%Y%m%d%H%M%S)"
-            mv "$dest" "$bak"
-            echo "  backup: $dest -> $bak"
+            if cmp -s "$dest" "$src" 2>/dev/null; then
+                rm -f "$dest"
+            else
+                bak="$dest.bak.$(date +%Y%m%d%H%M%S)"
+                mv "$dest" "$bak"
+                echo "  backup: $dest -> $bak"
+            fi
         fi
         mkdir -p "$(dirname "$dest")"
-    fi
-    ( cd "$DOTFILES_DIR" && stow -R -t "$HOME" "$pkg" )
-    echo "  stow: $pkg ($rel)"
+        ln -s "$src" "$dest"
+        echo "  enlazado: $dest"
+    done < <(find "$DOTFILES_DIR/$pkg" -type f -print0)
 }
 
-install_deps "${selected[@]}"
+install_missing_deps "${selected[@]}"
 
 for p in "${selected[@]}"; do
     echo "Paquete: $p"
-    case "$p" in
-        fish)       stow_file fish .config/fish/config.fish ;;
-        starship)   stow_file starship .config/starship.toml ;;
-        git)        stow_file git .gitconfig ;;
-        hypr)
-            if [[ "$DE" != *Hyprland* ]]; then
-                echo "  AVISO: config de Hyprland (CachyOS); en $DE solo la enlazo, no tendrá efecto."
-            fi
-            stow_dir hypr .config/hypr ;;
-        kitty)      stow_dir kitty .config/kitty ;;
-        ghostty)    stow_dir ghostty .config/ghostty ;;
-        antigravity) link_antigravity ;;
-    esac
+    if [[ "$p" == "hypr" && "$DE" != *Hyprland* ]]; then
+        echo "  AVISO: config de Hyprland (CachyOS); en $DE solo la enlazo, no tendrá efecto."
+    fi
+    link_package "$p"
 done
 
 if [[ " ${selected[*]} " == *" antigravity "* ]]; then
     echo
     echo "Nota Antigravity: el repo solo guarda settings.json."
-    echo "  CachyOS: sudo snap install antigravity-ide-snap (snap/antigravity-ide-snap.antigravity-ide)"
+    echo "  CachyOS: la app ya está (snap/antigravity-ide-snap.antigravity-ide)."
     echo "  Fedora:  instala el .rpm de la web de Google Antigravity."
+fi
+if [[ " ${selected[*]} " == *" git "* ]] && ! command -v git-credential-libsecret >/dev/null 2>&1; then
+    echo "Nota git: el helper 'libsecret' se instaló con git; si 'git push' pide usuario siempre, avísame."
 fi
 
 echo
