@@ -124,9 +124,9 @@
   },
   "breadcrumbs.enabled": false,
   "git.ignoreRebaseWarning": true,
-  "workbench.iconTheme": "vira-icons-carbon",
+  "workbench.iconTheme": "vira-icons-ocean",
   "chat.viewSessions.orientation": "stacked",
-  "workbench.colorTheme": "GitHub Dark Default",
+  "workbench.colorTheme": "Vira Ocean High Contrast",
   "viraTheme.accent": "Vira",
   "viraTheme.hidesExplorerArrows": false,
   "viraTheme.useOutlinedIcons": true,
@@ -157,7 +157,7 @@
   "editor.unicodeHighlight.invisibleCharacters": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "window.customTitleBarVisibility": "auto",
-  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.linux": "fish",
   "terminal.integrated.fontLigatures.enabled": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
@@ -195,4 +195,5 @@
       },
     ],
   },
+  "viraTheme.syncProductIcons": false,
 }
