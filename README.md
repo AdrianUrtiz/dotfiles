@@ -52,6 +52,12 @@ El instalador:
 3. Guarda backup `.bak.<fecha>` de lo que pise (si es idéntico, lo reemplaza sin backup).
 4. Enlaza cada archivo del paquete a su ruta en `$HOME` con `ln -s`.
 
+## Extras opcionales (no los instala `install.sh`)
+
+- `mommy` (mensajitos en el lado derecho del prompt, módulo `custom.mommy`):
+  CachyOS/Arch → `yay -S mommy`; Fedora → `cargo install mommy`.
+  Si no está instalado, el módulo se oculta solo y no rompe nada.
+
 ## Flujo diario
 
 Edita normal (`~/.config/starship.toml`, etc.): como son symlinks al repo,
