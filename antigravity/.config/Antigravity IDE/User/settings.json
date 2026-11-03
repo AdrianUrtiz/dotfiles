@@ -2,7 +2,7 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "workbench.activityBar.location": "bottom",
-  "workbench.productIconTheme": "viraOutline",
+  "workbench.productIconTheme": "fluent-icons",
   "editor.fontFamily": "'Cascadia Code PL', 'JetBrainsMono Nerd Font Mono', monospace",
   "editor.fontLigatures": true,
   "workbench.startupEditor": "none",
