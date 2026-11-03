@@ -5,13 +5,13 @@
 #   ./install.sh                  -> menú interactivo (marcar/desmarcar con números)
 #   ./install.sh --all            -> instala todo
 #   ./install.sh --cachy          -> preset CachyOS/Hyprland (git: work)
-#   ./install.sh --fedora         -> preset Fedora/GNOME (git: personal)
+#   ./install.sh --fedora         -> preset Fedora/GNOME (git: personal + base fish de CachyOS en /usr/share)
 #   ./install.sh --git-work / --git-personal -> identidad git (combinable)
 #   ./install.sh fish starship git ... -> solo esos paquetes
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome)
+PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome cachy-fish)
 
 desc() {
     case "$1" in
@@ -24,6 +24,7 @@ desc() {
         antigravity) echo "Antigravity settings.json (solo ajustes, sin cachés)" ;;
         zsh)         echo "Zsh + oh-my-zsh (~/.zshrc)" ;;
         gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf load)" ;;
+        cachy-fish)  echo "Base fish de CachyOS en /usr/share (solo instala lo que falte, con sudo)" ;;
     esac
 }
 
@@ -58,7 +59,7 @@ pkg_bin() {
 }
 
 PRESET_CACHY=(fish starship git hypr kitty antigravity)
-PRESET_FEDORA=(zsh starship git ghostty antigravity gnome)
+PRESET_FEDORA=(zsh starship git ghostty antigravity gnome cachy-fish)
 
 default_selection() {
     case "$DE" in
@@ -224,6 +225,32 @@ link_package() {
     done < <(find "$DOTFILES_DIR/$pkg" -type f -print0)
 }
 
+# --- Enlazado a rutas del sistema (fuera de $HOME, necesita sudo solo si falta algo) ---
+# Si el archivo ya existe como archivo real (p.ej. CachyOS nativo), se respeta y no se toca.
+link_system_package() {
+    local pkg="$1" root="${2%/}" src dest rel bak todo=0
+    while IFS= read -r -d '' src; do
+        rel="${src#$DOTFILES_DIR/$pkg/}"
+        dest="$root/$rel"
+        if [[ -L "$dest" && "$(readlink "$dest")" == "$src" ]]; then
+            echo "  ya enlazado: $dest"; continue
+        fi
+        if [[ -e "$dest" || -L "$dest" ]]; then
+            echo "  nativo: se respeta $dest"; continue
+        fi
+        todo=1
+    done < <(find "$DOTFILES_DIR/$pkg" -type f -print0)
+    (( todo )) || { echo "  sistema: todo presente, nada que hacer"; return 0; }
+    while IFS= read -r -d '' src; do
+        rel="${src#$DOTFILES_DIR/$pkg/}"
+        dest="$root/$rel"
+        if [[ -e "$dest" || -L "$dest" ]]; then continue; fi
+        sudo mkdir -p "$(dirname "$dest")"
+        sudo ln -s "$src" "$dest"
+        echo "  enlazado (sudo): $dest"
+    done < <(find "$DOTFILES_DIR/$pkg" -type f -print0)
+}
+
 install_missing_deps "${selected[@]}"
 
 setup_git_identity() {
@@ -269,6 +296,10 @@ for p in "${selected[@]}"; do
     if [[ "$p" == "gnome" && "$DE" != *GNOME* ]]; then
         echo "  AVISO: config de GNOME; en $DE solo la enlazo, el restore dconf puede no aplicar."
     fi
+    if [[ "$p" == "cachy-fish" ]]; then
+        link_system_package "$p" "/"
+        continue
+    fi
     link_package "$p"
     if [[ "$p" == "git" ]]; then
         setup_git_identity "$GIT_IDENTITY"
@@ -278,6 +309,10 @@ for p in "${selected[@]}"; do
     fi
 done
 
+if [[ " ${selected[*]} " == *" cachy-fish "* ]]; then
+    echo "Nota cachy-fish: instala la base fish de CachyOS en /usr/share (con sudo, solo lo faltante)."
+    echo "  En CachyOS no hace nada (archivos nativos). Requiere eza/bat/fastfetch para todo su potencial."
+fi
 if [[ " ${selected[*]} " == *" antigravity "* ]]; then
     echo
     echo "Nota Antigravity: el repo solo guarda settings.json."
