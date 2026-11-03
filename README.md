@@ -7,7 +7,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 
 | Paquete      | Destino                                        | Notas                                                |
 |--------------|------------------------------------------------|------------------------------------------------------|
-| `fish`       | `~/.config/fish/config.fish`                   | Solo CachyOS. Starship + sin fastfetch               |
+| `fish`       | `~/.config/fish/`                          | `config.fish` + `conf.d/cachy-base.fish` portable (sin Arch-only) + `done.fish` |
 | `starship`   | `~/.config/starship.toml`                      | Prompt azul dos líneas, compartido                   |
 | `git`        | `~/.gitconfig` + `~/.gitconfig-{work,personal}`| Común sin `[user]`; identidad manual vía `~/.gitconfig.identity` |
 | `hypr`       | `~/.config/hypr/`                              | Solo CachyOS/Hyprland. Atajo `SUPER+G` → Antigravity |
@@ -16,7 +16,6 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `antigravity`| `~/.config/Antigravity IDE/User/settings.json` | Fuente de la verdad: el repo (se sobrescribe local)  |
 | `zsh`        | `~/.zshrc`                                     | Fedora: oh-my-zsh + starship + zoxide (ver nota)     |
 | `gnome`      | dconf + `~/.config/tiling-assistant/`          | Keybindings, dash, interface; `monitors.xml` y `mimeapps.list` NO se versionan |
-| `cachy-fish` | `/usr/share/cachyos-fish-config/` (sistema)    | Vendoriza la base fish de CachyOS; en CachyOS se respeta la nativa, en Fedora se enlaza con sudo |
 
 ## Uso
 
@@ -26,7 +25,7 @@ cd ~/dotfiles
 ./install.sh                            # menú interactivo, preselecciona según tu escritorio
 ./install.sh --all                      # todo
 ./install.sh --cachy                    # preset CachyOS/Hyprland (git: work)
-./install.sh --fedora                   # preset Fedora/GNOME (git: personal + cachy-fish en /usr/share)
+./install.sh --fedora                   # preset Fedora/GNOME (git: personal)
 ./install.sh --fedora --git-work        # Fedora pero con identidad trabajo
 ./install.sh fish starship git          # solo esos (git pregunta work/personal)
 ```
