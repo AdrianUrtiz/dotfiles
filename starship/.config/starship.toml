@@ -5,34 +5,7 @@
 # Palettes must be defined _after_ this line
 palette = "blues"
 
-format = """
-[](fg:b1 bg:base)\
-[$os](fg:white bg:b1)\
-[$username](fg:white bg:b1)[@ ](fg:white bg:b1)[$shell](fg:white bg:b1)\
-[](fg:b1 bg:b2)\
-[$directory](fg:white bg:b2)\
-[](fg:b2 bg:b3)\
-[$git_branch](fg:white bg:b3)\
-[$git_status](fg:white bg:b3)\
-[](fg:b3 bg:b4)\
-[$c](fg:white bg:b4)\
-[$elixir](fg:white bg:b4)\
-[$elm](fg:white bg:b4)\
-[$golang](fg:white bg:b4)\
-[$gradle](fg:white bg:b4)\
-[$haskell](fg:white bg:b4)\
-[$java](fg:white bg:b4)\
-[$julia](fg:white bg:b4)\
-[$nodejs](fg:white bg:b4)\
-[$nim](fg:white bg:b4)\
-[$rust](fg:white bg:b4)\
-[$scala](fg:white bg:b4)\
-[](fg:b4 bg:b5)\
-[$docker_context](fg:white bg:b5)\
-[](fg:b5 bg:b6)\
-[$time](fg:white bg:b6)\
-[](fg:b6 bg:base)\n$character
-"""
+format = "[](fg:base)[$os](fg:white bg:base)[](fg:base bg:b1)[$username](fg:white bg:b1)[@ ](fg:white bg:b1)[$shell](fg:white bg:b1)[](fg:b1 bg:b2)[$directory](fg:white bg:b2)[](fg:b2 bg:b3)[$git_branch](fg:white bg:b3)[$git_status](fg:white bg:b3)[](fg:b3 bg:b4)[$c](fg:white bg:b4)[$elixir](fg:white bg:b4)[$elm](fg:white bg:b4)[$golang](fg:white bg:b4)[$gradle](fg:white bg:b4)[$haskell](fg:white bg:b4)[$java](fg:white bg:b4)[$julia](fg:white bg:b4)[$nodejs](fg:white bg:b4)[$nim](fg:white bg:b4)[$rust](fg:white bg:b4)[$scala](fg:white bg:b4)[](fg:b4 bg:b5)[$docker_context](fg:white bg:b5)[](fg:b5 bg:b6)[$time](fg:white bg:b6)[](fg:b6)\n$character"
 
 right_format = "$custom"
 
@@ -52,7 +25,7 @@ when = "true"
 show_always = true
 aliases = {"root" = "", "tori" = "", "chroot" = "󰽰"}
 
-format = '$user '
+format = ' $user '
 disabled = false
 
 # An alternative to the username module which displays a symbol that
@@ -260,51 +233,51 @@ success_symbol = "[>](bold fg:white) "
 error_symbol = "[>](bold fg:#ff6b6b) "
 
 [os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CachyOS = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-Nobara = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
+Alpaquita = ""
+Alpine = ""
+AlmaLinux = ""
+Amazon = ""
+Android = ""
+Arch = ""
+Artix = ""
+CachyOS = ""
+CentOS = ""
+Debian = ""
+DragonFly = ""
+Emscripten = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = "󰛓"
+Gentoo = ""
+HardenedBSD = "󰞌"
+Illumos = "󰈸"
+Kali = ""
+Linux = ""
+Mabox = ""
+Macos = ""
+Manjaro = ""
+Mariner = ""
+MidnightBSD = ""
+Mint = ""
+NetBSD = ""
+NixOS = ""
+Nobara = ""
+OpenBSD = "󰈺"
+openSUSE = ""
+OracleLinux = "󰌷"
+Pop = ""
+Raspbian = ""
+Redhat = ""
+RedHatEnterprise = ""
+RockyLinux = ""
+Redox = "󰀘"
+Solus = "󰠳"
+SUSE = ""
+Ubuntu = ""
+Unknown = ""
+Void = ""
+Windows = "󰍲"
 
 # Palette definitions
 [palettes.blues]
