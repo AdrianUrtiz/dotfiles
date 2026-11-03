@@ -2,14 +2,34 @@
   "git.autofetch": true,
   "git.confirmSync": false,
   "workbench.activityBar.location": "bottom",
-  "workbench.productIconTheme": "fluent-icons",
-  "editor.fontFamily": "'Cascadia Code PL', 'JetBrainsMono Nerd Font Mono', monospace",
+  "workbench.productIconTheme": "viraOutline",
+  "editor.fontFamily": "'Cascadia Code PL'",
+  "editor.fontSize": 14.3,
   "editor.fontLigatures": true,
   "workbench.startupEditor": "none",
   "files.autoSave": "afterDelay",
   "editor.minimap.enabled": false,
   "editor.formatOnSave": true,
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono', monospace",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe",
+      ],
+      "args": [],
+      "icon": "terminal-cmd",
+    },
+    "Git Bash": {
+      "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+      "args": ["--login", "-i"],
+    },
+  },
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.cursorBlinking": "expand",
   "editor.renderWhitespace": "none",
@@ -84,9 +104,6 @@
       "agentsPanel.border": "#ffffff0f",
       "surface.border": "#ffffff0f",
       "widget.border": "#ffffff0f",
-      "notebook.focusedCellBorder": "#E9A581",
-      "notebook.selectedCellBorder": "#E9A581",
-      "notebook.inactiveSelectedCellBorder": "#E9A58180",
     },
   },
   "explorer.confirmDelete": false,
@@ -107,8 +124,9 @@
   },
   "breadcrumbs.enabled": false,
   "git.ignoreRebaseWarning": true,
+  "workbench.iconTheme": "vira-icons-carbon",
   "chat.viewSessions.orientation": "stacked",
-  "workbench.colorTheme": "GitHub Dark",
+  "workbench.colorTheme": "GitHub Dark Default",
   "viraTheme.accent": "Vira",
   "viraTheme.hidesExplorerArrows": false,
   "viraTheme.useOutlinedIcons": true,
@@ -139,6 +157,7 @@
   "editor.unicodeHighlight.invisibleCharacters": false,
   "editor.unicodeHighlight.ambiguousCharacters": false,
   "window.customTitleBarVisibility": "auto",
+  "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.fontLigatures.enabled": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
@@ -176,26 +195,4 @@
       },
     ],
   },
-  "terminal.integrated.profiles.linux": {
-    "bash": {
-      "path": "bash",
-      "icon": "terminal-bash",
-    },
-    "zsh": {
-      "path": "zsh",
-    },
-    "fish": {
-      "path": "/usr/bin/fish",
-    },
-    "tmux": {
-      "path": "tmux",
-      "icon": "terminal-tmux",
-    },
-    "pwsh": {
-      "path": "pwsh",
-      "icon": "terminal-powershell",
-    },
-  },
-  "editor.fontSize": 13,
-  "viraTheme.syncProductIcons": false,
 }
