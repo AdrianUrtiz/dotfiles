@@ -7,17 +7,10 @@ palette = "blues"
 
 format = "[](fg:base)[$os](fg:white bg:base)[](fg:base bg:b1)[$username](fg:white bg:b1)[@ ](fg:white bg:b1)[$shell](fg:white bg:b1)[](fg:b1 bg:b2)[$directory](fg:white bg:b2)[](fg:b2 bg:b3)[$git_branch](fg:white bg:b3)[$git_status](fg:white bg:b3)[](fg:b3 bg:b4)[$c](fg:white bg:b4)[$elixir](fg:white bg:b4)[$elm](fg:white bg:b4)[$golang](fg:white bg:b4)[$gradle](fg:white bg:b4)[$haskell](fg:white bg:b4)[$java](fg:white bg:b4)[$julia](fg:white bg:b4)[$nodejs](fg:white bg:b4)[$nim](fg:white bg:b4)[$rust](fg:white bg:b4)[$scala](fg:white bg:b4)[](fg:b4 bg:b5)[$docker_context](fg:white bg:b5)[](fg:b5 bg:b6)[$time](fg:white bg:b6)[](fg:b6)\n$character"
 
-right_format = "$custom"
-
 command_timeout = 300
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
-
-# Writing a custom module for mommy O_o
-[custom.mommy]
-command = "mommy -1 -s $status"
-when = "true"
 
 # You can also replace your username with a neat symbol like   or disable this
 # and use the os module below
