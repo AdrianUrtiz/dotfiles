@@ -274,3 +274,39 @@ add-zsh-hook -d precmd _ghostty_prompt_title 2>/dev/null
 add-zsh-hook -d chpwd _ghostty_prompt_title 2>/dev/null
 add-zsh-hook precmd _ghostty_prompt_title
 add-zsh-hook chpwd _ghostty_prompt_title
+
+# Dev servers: front (node/vite/next) + back (php/laravel) por puerto.
+# Mata solo los puertos de dev, nunca pkill node/php (eso mataría
+# opencode, codex y language servers del IDE).
+__DEV_PORTS=(3000 3001 4200 5173 5174 8000 8080)
+devports() {
+  ss -tlnp 2>/dev/null | grep -E ':(3000|3001|4200|5173|5174|8000|8080)\b' \
+    || echo "sin dev servers en puertos 3000,3001,4200,5173,5174,8000,8080"
+  if command -v herdr >/dev/null 2>&1; then
+    echo "--- herdr (dónde corren) ---"
+    herdr pane list 2>/dev/null | python3 -c "
+import json,sys
+try:
+    d = json.load(sys.stdin)
+    panes = d.get('result', {}).get('panes', [])
+    for p in panes:
+        title = p.get('terminal_title_stripped') or p.get('terminal_title') or ''
+        low = title.lower()
+        if any(k in low for k in ('vite', 'next', 'npm run dev', 'artisan serve', 'php')) or '/client' in p.get('cwd','') or '/server' in p.get('cwd',''):
+            print(p.get('pane_id'), '|', p.get('workspace_id'), '|', p.get('cwd'), '|', title)
+except Exception:
+    print('(no se pudo parsear herdr pane list)')
+"
+  fi
+}
+devkill() {
+  local port killed=0
+  for port in "${__DEV_PORTS[@]}"; do
+    if fuser "$port/tcp" >/dev/null 2>&1; then
+      echo "> matando puerto $port ..."
+      fuser -k "$port/tcp" 2>/dev/null
+      killed=1
+    fi
+  done
+  (( killed )) || echo "nada escuchando en 3000,3001,4200,5173,5174,8000,8080"
+}
