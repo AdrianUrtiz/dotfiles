@@ -17,6 +17,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `zsh`        | `~/.zshrc`                                     | Fedora: oh-my-zsh + starship + zoxide (ver nota)     |
 | `gnome`      | dconf + `~/.config/tiling-assistant/`          | Keybindings, dash, interface; `monitors.xml` y `mimeapps.list` NO se versionan |
 | `bin`        | `~/.local/bin/ant`                             | Wrapper `ant .` → Antigravity snap (snap en ambas distros; instala `snapd` si falta) |
+| `herdr`      | `~/.config/herdr/config.toml`                  | Workspace manager: theme, ui, toast (logs/socks/sesiones NO se versionan) |
 
 ## Uso
 

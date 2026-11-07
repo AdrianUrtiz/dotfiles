@@ -1,5 +1,5 @@
 [/]
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']
 
 [custom-keybindings/custom0]
 binding='<Super>e'
@@ -15,3 +15,8 @@ name='Mission Center'
 binding='<Super>Return'
 command='/usr/bin/ghostty'
 name='Ghostty'
+
+[custom-keybindings/custom3]
+binding='<Super><Shift>Return'
+command='/usr/bin/ghostty -e /home/adrian/.local/bin/herdr'
+name='Ghostty + Herdr'

@@ -11,7 +11,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome bin)
+PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome bin herdr)
 
 desc() {
     case "$1" in
@@ -25,6 +25,7 @@ desc() {
         zsh)         echo "Zsh + oh-my-zsh (~/.zshrc)" ;;
         gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf load)" ;;
         bin)         echo "Comando ant -> Antigravity (wrapper snap, ~/.local/bin/)" ;;
+        herdr)       echo "Herdr workspace manager (~/.config/herdr/config.toml)" ;;
     esac
 }
 
@@ -67,8 +68,8 @@ pkg_extra_bins() {
     esac
 }
 
-PRESET_CACHY=(fish starship git hypr kitty antigravity bin)
-PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome bin)
+PRESET_CACHY=(fish starship git hypr kitty antigravity bin herdr)
+PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome bin herdr)
 
 default_selection() {
     case "$DE" in
