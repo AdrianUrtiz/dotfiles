@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# herdr-focus: enfoca la ventana Ghostty con herdr si ya existe;
+# si no, abre una nueva maximizada. Lo usa el atajo Super+Shift+Enter.
+set -u
+
+FOCUSED="$(gdbus call --session --dest dev.herdr.Focus \
+  --object-path /dev/herdr/Focus \
+  --method dev.herdr.Focus.FocusHerdr 2>/dev/null || echo '(false,)')"
+
+if [[ "$FOCUSED" != "(true,)" ]]; then
+  exec /usr/bin/ghostty --maximize=true -e "$HOME/.local/bin/herdr"
+fi

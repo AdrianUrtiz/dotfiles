@@ -1,0 +1,7 @@
+{
+  "uuid": "herdr-focus@local",
+  "name": "Herdr Focus",
+  "description": "Expone dev.herdr.Focus.FocusHerdr() por DBus: enfoca la ventana Ghostty que corre herdr",
+  "shell-version": ["50"],
+  "version": 1
+}

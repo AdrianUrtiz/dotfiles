@@ -23,7 +23,7 @@ desc() {
         ghostty)     echo "Terminal Ghostty, Fedora/GNOME (~/.config/ghostty/ + themes + css)" ;;
         antigravity) echo "Antigravity settings.json (solo ajustes, sin cachés)" ;;
         zsh)         echo "Zsh + oh-my-zsh (~/.zshrc)" ;;
-        gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf load)" ;;
+        gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf) + extensión herdr-focus" ;;
         bin)         echo "Comando ant -> Antigravity (wrapper snap, ~/.local/bin/)" ;;
         herdr)       echo "Herdr workspace manager (~/.config/herdr/config.toml)" ;;
     esac
@@ -306,6 +306,11 @@ for p in "${selected[@]}"; do
     fi
     if [[ "$p" == "gnome" ]]; then
         restore_gnome
+        if command -v gnome-extensions >/dev/null 2>&1; then
+            gnome-extensions enable herdr-focus@local 2>/dev/null \
+                && echo "  extensión: herdr-focus@local activada" \
+                || echo "  AVISO: no se pudo activar herdr-focus@local"
+        fi
     fi
     if [[ "$p" == "fish" ]]; then
         set_default_shell
