@@ -18,5 +18,5 @@ name='Ghostty'
 
 [custom-keybindings/custom3]
 binding='<Super><Shift>Return'
-command='/usr/bin/ghostty -e /home/adrian/.local/bin/herdr'
+command='/usr/bin/ghostty --maximize=true -e /home/adrian/.local/bin/herdr'
 name='Ghostty + Herdr'
