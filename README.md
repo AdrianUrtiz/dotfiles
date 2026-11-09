@@ -18,6 +18,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `gnome`      | dconf + `~/.config/tiling-assistant/` + ext `herdr-focus@local` | Keybindings, dash, interface; Super+Shift+Enter enfoca Ghostty+herdr (`~/.local/bin/herdr-focus`); `monitors.xml` y `mimeapps.list` NO se versionan |
 | `bin`        | `~/.local/bin/ant`                             | Wrapper `ant .` → Antigravity snap (snap en ambas distros; instala `snapd` si falta) |
 | `herdr`      | `~/.config/herdr/config.toml`                  | Workspace manager: theme, ui, toast (logs/socks/sesiones NO se versionan) |
+| `agents`     | `~/.agents/skills/`                            | Skills globales (impeccable, using-superpowers, conventional-commits, find-skills), compartidas entre máquinas |
 
 ## Uso
 

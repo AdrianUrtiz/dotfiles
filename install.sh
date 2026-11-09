@@ -11,7 +11,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome bin herdr)
+PACKAGES=(fish starship git hypr kitty ghostty antigravity zsh gnome bin herdr agents)
 
 desc() {
     case "$1" in
@@ -26,6 +26,7 @@ desc() {
         gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf) + extensión herdr-focus" ;;
         bin)         echo "Comando ant -> Antigravity (wrapper snap, ~/.local/bin/)" ;;
         herdr)       echo "Herdr workspace manager (~/.config/herdr/config.toml)" ;;
+        agents)      echo "Skills globales de agentes (~/.agents/skills/, compartidas entre máquinas)" ;;
     esac
 }
 
@@ -68,14 +69,14 @@ pkg_extra_bins() {
     esac
 }
 
-PRESET_CACHY=(fish starship git hypr kitty antigravity bin herdr)
-PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome bin herdr)
+PRESET_CACHY=(fish starship git hypr kitty antigravity bin herdr agents)
+PRESET_FEDORA=(fish zsh starship git ghostty antigravity gnome bin herdr agents)
 
 default_selection() {
     case "$DE" in
         *Hyprland*) echo "${PRESET_CACHY[@]}" ;;
         *GNOME*)    echo "${PRESET_FEDORA[@]}" ;;
-        *)          echo "fish starship git antigravity" ;;
+        *)          echo "fish starship git antigravity agents" ;;
     esac
 }
 
