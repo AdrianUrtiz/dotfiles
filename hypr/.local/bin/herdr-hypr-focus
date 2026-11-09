@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# herdr-hypr-focus: run-or-raise para kitty+herdr en Hyprland.
+# Si ya hay una ventana con clase "herdr", la enfoca (Hyprland cambia
+# de workspace solo si hace falta); si no, abre una nueva.
+# Lo usa el atajo Super+Shift+Enter (ver hypr/config/binds.lua).
+set -u
+
+if hyprctl clients -j 2>/dev/null | jq -e '[.[] | select(.class == "herdr")] | length > 0' >/dev/null; then
+  hyprctl dispatch 'hl.dsp.focus({ window = "class:^herdr$" })' >/dev/null
+else
+  exec uwsm app -- kitty --class herdr -e "$HOME/.local/bin/herdr"
+fi

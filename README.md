@@ -10,7 +10,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `fish`       | `~/.config/fish/`                          | `config.fish` + `conf.d/cachy-base.fish` portable (sin Arch-only) + `done.fish` |
 | `starship`   | `~/.config/starship.toml`                      | Prompt azul dos líneas, compartido                   |
 | `git`        | `~/.gitconfig` + `~/.gitconfig-{work,personal}`| Común sin `[user]`; identidad manual vía `~/.gitconfig.identity` |
-| `hypr`       | `~/.config/hypr/`                              | Solo CachyOS/Hyprland. Atajo `SUPER+G` → Antigravity |
+| `hypr`       | `~/.config/hypr/` + `~/.local/bin/herdr-hypr-focus` | Solo CachyOS/Hyprland. Atajo `SUPER+G` → Antigravity; Super+Shift+Enter enfoca kitty+herdr (run-or-raise, clase `herdr`) |
 | `kitty`      | `~/.config/kitty/`                             | Solo CachyOS                                         |
 | `ghostty`    | `~/.config/ghostty/`                           | Fedora/GNOME: config + `themes/catppuccin-mocha` + `custom.css` |
 | `antigravity`| `~/.config/Antigravity IDE/User/settings.json` | Fuente de la verdad: el repo (se sobrescribe local)  |

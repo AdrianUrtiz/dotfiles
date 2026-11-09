@@ -18,7 +18,7 @@ desc() {
         fish)        echo "Fish shell (config.fish + conf.d portable sin Arch-only)" ;;
         starship)    echo "Prompt Starship (~/.config/starship.toml)" ;;
         git)         echo "Aliases git + identidad work/personal (elige al instalar)" ;;
-        hypr)        echo "Hyprland CachyOS, atajo SUPER+G (~/.config/hypr/)" ;;
+        hypr)        echo "Hyprland CachyOS, atajo SUPER+G + run-or-raise kitty+herdr (Super+Shift+Enter, ~/.local/bin/herdr-hypr-focus)" ;;
         kitty)       echo "Terminal Kitty (~/.config/kitty/)" ;;
         ghostty)     echo "Terminal Ghostty, Fedora/GNOME (~/.config/ghostty/ + themes + css)" ;;
         antigravity) echo "Antigravity settings.json (solo ajustes, sin cachés)" ;;
