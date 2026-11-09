@@ -24,7 +24,7 @@ desc() {
         antigravity) echo "Antigravity settings.json (solo ajustes, sin cachés)" ;;
         zsh)         echo "Zsh + oh-my-zsh (~/.zshrc)" ;;
         gnome)       echo "GNOME: keybindings, dash, interface + tiling-assistant (dconf) + extensión herdr-focus" ;;
-        bin)         echo "Comando ant -> Antigravity (wrapper snap, ~/.local/bin/)" ;;
+        bin)         echo "Comandos ant (-> Antigravity snap) y agents-sync (skills globales al repo + reload opencode)" ;;
         herdr)       echo "Herdr workspace manager (~/.config/herdr/config.toml)" ;;
         agents)      echo "Skills globales de agentes (~/.agents/skills/, compartidas entre máquinas)" ;;
     esac

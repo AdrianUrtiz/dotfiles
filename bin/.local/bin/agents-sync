@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# agents-sync: lleva skills globales nuevas (~/.agents/skills) al repo de
+# dotfiles, las enlaza con install.sh y recarga opencode.
+# Uso: agents-sync   (correr después de instalar una skill)
+set -u
+
+GLOBAL="${HOME}/.agents/skills"
+REPO="$(cd "$(dirname "$(readlink -f "$0")")/../../.." >/dev/null 2>&1 && pwd)"
+SKILLS_DIR="${REPO}/agents/.agents/skills"
+
+if [[ ! -d "$GLOBAL" ]]; then
+  echo "agents-sync: no existe ${GLOBAL}, nada que hacer."
+  exit 0
+fi
+mkdir -p "$SKILLS_DIR"
+
+moved=0
+for src in "$GLOBAL"/*; do
+  [[ -e "$src" ]] || continue
+  name="$(basename "$src")"
+  if [[ -e "${SKILLS_DIR}/${name}" ]]; then
+    # Ya existe en el repo: si está gestionada (enlaces), no hay nada que hacer.
+    if [[ -L "$src" || -L "${src}/SKILL.md" ]]; then
+      continue
+    fi
+    echo "aviso: '${name}' existe en repo y en global sin enlazar; la dejo intacta."
+    continue
+  fi
+  mv "$src" "${SKILLS_DIR}/${name}"
+  echo "movida al repo: ${name}"
+  moved=1
+done
+
+if (( moved )); then
+  "${REPO}/install.sh" agents
+  if command -v opencode >/dev/null 2>&1; then
+    opencode reload
+  fi
+else
+  echo "agents-sync: sin skills nuevas, todo versionado."
+fi

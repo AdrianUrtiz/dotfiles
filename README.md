@@ -16,7 +16,7 @@ Cada paquete replica la ruta de `$HOME` y se enlaza archivo por archivo.
 | `antigravity`| `~/.config/Antigravity IDE/User/settings.json` | Fuente de la verdad: el repo (se sobrescribe local)  |
 | `zsh`        | `~/.zshrc`                                     | Fedora: oh-my-zsh + starship + zoxide (ver nota)     |
 | `gnome`      | dconf + `~/.config/tiling-assistant/` + ext `herdr-focus@local` | Keybindings, dash, interface; Super+Shift+Enter enfoca Ghostty+herdr (`~/.local/bin/herdr-focus`); `monitors.xml` y `mimeapps.list` NO se versionan |
-| `bin`        | `~/.local/bin/ant`                             | Wrapper `ant .` → Antigravity snap (snap en ambas distros; instala `snapd` si falta) |
+| `bin`        | `~/.local/bin/{ant,agents-sync}`              | `ant .` → Antigravity snap; `agents-sync` lleva skills nuevas al repo y recarga opencode |
 | `herdr`      | `~/.config/herdr/config.toml`                  | Workspace manager: theme, ui, toast (logs/socks/sesiones NO se versionan) |
 | `agents`     | `~/.agents/skills/`                            | Skills globales (impeccable, using-superpowers, conventional-commits, find-skills), compartidas entre máquinas |
 
